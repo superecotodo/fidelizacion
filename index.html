@@ -681,13 +681,6 @@ function aplicarPermisos(rol){
     }
   }
 
-  // Ocultar tabs que el cajero no necesita (ranking y clientes quedan, movimientos también)
-  // El cajero ve solo sus propios movimientos
-  if(esCajero){
-    const tabClis = document.querySelector('[onclick*="switchTab(\'clis\']")'];
-    const tabRank = document.querySelector('[onclick*="switchTab(\'rank\']")'];
-    // Los dejamos visibles pero filtramos movimientos por cajero
-  }
 }
 
 // Flujo de autorización para cajero
