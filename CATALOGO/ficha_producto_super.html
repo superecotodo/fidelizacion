@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fichas Productos - Super ECO Todo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --verde: #1e6b1e;
+    --naranja: #d4850a;
+    --rojo: #c0392b;
+    --amarillo: #f5c518;
+    --crema: #FFF8F0;
+  }
+
+  body {
+    background: #e8e0d5;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--verde);
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .instruccion {
+    background: white;
+    border-left: 5px solid var(--naranja);
+    padding: 12px 18px;
+    border-radius: 8px;
+    max-width: 600px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* ===== FICHA ===== */
+  .ficha {
+    width: 600px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    position: relative;
+  }
+
+  /* Fondo degradado diagonal con colores del super */
+  .ficha-bg {
+    background: linear-gradient(135deg, var(--verde) 0%, #2e8b2e 30%, var(--naranja) 70%, #e8950c 100%);
+    padding: 32px 32px 0;
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Círculos decorativos de fondo */
+  .ficha-bg::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .ficha-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 40px; left: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .logo-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    z-index: 2;
+  }
+
+  .logo-texto {
+    font-family: 'Fredoka One', cursive;
+    color: white;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    line-height: 1.1;
+  }
+  .logo-texto span {
+    color: var(--amarillo);
+  }
+
+  .badge-nuevo {
+    background: var(--rojo);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.85rem;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  }
+
+  .foto-container {
+    z-index: 2;
+    width: 280px;
+    height: 310px;
+    position: relative;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+  }
+
+  .foto-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Plataforma bajo el producto */
+  .plataforma {
+    width: 240px;
+    height: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    margin-top: -10px;
+    filter: blur(6px);
+    z-index: 1;
+  }
+
+  /* Sección inferior crema */
+  .ficha-info {
+    background: var(--crema);
+    padding: 22px 28px 24px;
+    position: relative;
+  }
+
+  /* Ola separadora */
+  .ola {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    margin-bottom: -2px;
+    background: transparent;
+  }
+  .ola svg {
+    display: block;
+    width: 100%;
+  }
+
+  .nombre-producto {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: var(--verde);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .subtitulo {
+    color: #888;
+    font-size: 0.88rem;
+    margin-bottom: 14px;
+  }
+
+  .precio-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .precio {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.4rem;
+    color: var(--naranja);
+    line-height: 1;
+  }
+
+  .precio-anterior {
+    font-size: 1.1rem;
+    color: #bbb;
+    text-decoration: line-through;
+    font-weight: 700;
+  }
+
+  .descuento-badge {
+    background: var(--rojo);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  .footer-ficha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px dashed #e0d8cf;
+    padding-top: 14px;
+  }
+
+  .ubicacion {
+    font-size: 0.8rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tag {
+    background: var(--verde);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  /* ===== CONTROLES ===== */
+  .controles {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 600px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .controles h2 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--verde);
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input, select {
+    padding: 8px 12px;
+    border: 2px solid #e0d8cf;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--verde);
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+
+  .btn-verde { background: var(--verde); color: white; }
+  .btn-naranja { background: var(--naranja); color: white; }
+
+  .paleta {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .color-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    flex: none;
+    transition: transform 0.15s;
+  }
+  .color-btn:hover, .color-btn.activo { 
+    transform: scale(1.2); 
+    border-color: #333;
+  }
+</style>
+</head>
+<body>
+
+<h1>🛒 Fichas de Producto — Super ECO Todo</h1>
+
+<div class="instruccion">
+  <strong>¿Cómo usar?</strong> Completá los datos del producto abajo, elegí el fondo y el color. Luego hacé captura de pantalla de la ficha para publicar en redes. 
+  Para usar tu propia foto, la podés arrastrar desde tu PC al campo de imagen.
+</div>
+
+<!-- FICHA VISUAL -->
+<div class="ficha" id="ficha">
+  <div class="ficha-bg" id="fondo">
+    <div class="logo-area">
+      <div class="logo-texto">Super<br><span>ECO</span> Todo</div>
+      <div class="badge-nuevo" id="badge">¡NUEVO!</div>
+    </div>
+    <div class="foto-container">
+      <img id="foto-producto" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='310' viewBox='0 0 280 310'%3E%3Crect width='280' height='310' fill='rgba(255,255,255,0.15)' rx='16'/%3E%3Ctext x='140' y='155' text-anchor='middle' font-family='Arial' font-size='16' fill='rgba(255,255,255,0.7)'%3ETu foto aquí%3C/text%3E%3C/svg%3E" alt="Producto">
+    </div>
+    <div class="plataforma"></div>
+  </div>
+  <div class="ola">
+    <svg viewBox="0 0 600 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="40">
+      <path d="M0,40 L0,20 Q75,0 150,20 Q225,40 300,20 Q375,0 450,20 Q525,40 600,20 L600,40 Z" id="ola-fill" fill="#FFF8F0"/>
+    </svg>
+  </div>
+  <div class="ficha-info">
+    <div class="nombre-producto" id="display-nombre">Nombre del Producto</div>
+    <div class="subtitulo" id="display-subtitulo">Descripción breve</div>
+    <div class="precio-row">
+      <div class="precio" id="display-precio">$0</div>
+      <div class="precio-anterior" id="display-antes" style="display:none">$0</div>
+      <div class="descuento-badge" id="display-desc" style="display:none">-0%</div>
+    </div>
+    <div class="footer-ficha">
+      <div class="ubicacion">📍 Libertad 2867, Santiago del Estero</div>
+      <div class="tag" id="display-tag">Papelería</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTROLES -->
+<div class="controles">
+  <h2>✏️ Completá los datos</h2>
+
+  <div class="form-grid">
+    <div class="form-group full">
+      <label>Foto del producto</label>
+      <input type="file" id="input-foto" accept="image/*">
+    </div>
+    <div class="form-group full">
+      <label>Nombre del producto</label>
+      <input type="text" id="input-nombre" placeholder="Ej: Mochila Pacific Blue" value="">
+    </div>
+    <div class="form-group full">
+      <label>Descripción corta</label>
+      <input type="text" id="input-subtitulo" placeholder="Ej: Con ruedas · Negro y verde" value="">
+    </div>
+    <div class="form-group">
+      <label>Precio ($)</label>
+      <input type="text" id="input-precio" placeholder="Ej: 45.000">
+    </div>
+    <div class="form-group">
+      <label>Precio anterior ($, opcional)</label>
+      <input type="text" id="input-antes" placeholder="Ej: 55.000">
+    </div>
+    <div class="form-group">
+      <label>Categoría / Tag</label>
+      <select id="input-tag">
+        <option>Papelería</option>
+        <option>Mochilas</option>
+        <option>Termos</option>
+        <option>Bazar</option>
+        <option>Alimentos</option>
+        <option>Limpieza</option>
+        <option>Bebidas</option>
+        <option>Ofertas</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Badge superior</label>
+      <select id="input-badge">
+        <option>¡NUEVO!</option>
+        <option>¡OFERTA!</option>
+        <option>¡IMPERDIBLE!</option>
+        <option>¡ÚLTIMO!</option>
+        <option>¡HOY!</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-top:14px">
+    <label>Estilo de fondo</label>
+    <div class="paleta" id="paleta">
+      <div class="color-btn activo" style="background: linear-gradient(135deg,#1e6b1e,#d4850a)" data-estilo="verde-naranja" title="Verde → Naranja"></div>
+      <div class="color-btn" style="background: linear-gradient(135deg,#1e6b1e,#2e8b2e)" data-estilo="verde-oscuro" title="Verde sólido"></div>
+      <div class="color-btn" style="background: linear-gradient(135deg,#c0392b,#d4850a)" data-estilo="rojo-naranja" title="Rojo → Naranja"></div>
+      <div class="color-btn" style="background: linear-gradient(135deg,#1a1a2e,#16213e)" data-estilo="oscuro" title="Oscuro"></div>
+      <div class="color-btn" style="background: linear-gradient(135deg,#d4850a,#f5c518)" data-estilo="amarillo" title="Naranja → Amarillo"></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-verde" onclick="actualizar()">🔄 Actualizar ficha</button>
+    <button class="btn-naranja" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+</div>
+
+<script>
+  const estilos = {
+    'verde-naranja': 'linear-gradient(135deg, #1e6b1e 0%, #2e8b2e 30%, #d4850a 70%, #e8950c 100%)',
+    'verde-oscuro': 'linear-gradient(135deg, #155215 0%, #1e6b1e 50%, #1a7a1a 100%)',
+    'rojo-naranja': 'linear-gradient(135deg, #c0392b 0%, #e74c3c 40%, #d4850a 100%)',
+    'oscuro': 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+    'amarillo': 'linear-gradient(135deg, #c07a0a 0%, #d4850a 40%, #f5c518 100%)',
+  };
+
+  let estiloActual = 'verde-naranja';
+
+  // Paleta
+  document.querySelectorAll('.color-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+      estiloActual = btn.dataset.estilo;
+      document.getElementById('fondo').style.background = estilos[estiloActual];
+    });
+  });
+
+  // Foto
+  document.getElementById('input-foto').addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('foto-producto').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function actualizar() {
+    const nombre = document.getElementById('input-nombre').value || 'Nombre del Producto';
+    const sub = document.getElementById('input-subtitulo').value || 'Descripción breve';
+    const precio = document.getElementById('input-precio').value;
+    const antes = document.getElementById('input-antes').value;
+    const tag = document.getElementById('input-tag').value;
+    const badge = document.getElementById('input-badge').value;
+
+    document.getElementById('display-nombre').textContent = nombre;
+    document.getElementById('display-subtitulo').textContent = sub;
+    document.getElementById('display-precio').textContent = precio ? '$' + precio : '$0';
+    document.getElementById('display-tag').textContent = tag;
+    document.getElementById('badge').textContent = badge;
+    document.getElementById('fondo').style.background = estilos[estiloActual];
+
+    const elAntes = document.getElementById('display-antes');
+    const elDesc = document.getElementById('display-desc');
+    if (antes && precio) {
+      const p = parseFloat(precio.replace(/\./g,'').replace(',','.'));
+      const a = parseFloat(antes.replace(/\./g,'').replace(',','.'));
+      const pct = Math.round((1 - p/a) * 100);
+      elAntes.textContent = '$' + antes;
+      elAntes.style.display = 'block';
+      elDesc.textContent = '-' + pct + '%';
+      elDesc.style.display = 'block';
+    } else {
+      elAntes.style.display = 'none';
+      elDesc.style.display = 'none';
+    }
+  }
+
+  // Auto-update en tiempo real
+  ['input-nombre','input-subtitulo','input-precio','input-antes'].forEach(id => {
+    document.getElementById(id).addEventListener('input', actualizar);
+  });
+  ['input-tag','input-badge'].forEach(id => {
+    document.getElementById(id).addEventListener('change', actualizar);
+  });
+</script>
+</body>
+</html>

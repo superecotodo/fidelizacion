@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Catálogo de Canjes — Super ECO todo</title>
+<meta name="description" content="Catálogo de premios del programa de fidelización de Super ECO todo. Acumulá puntos y canjeá increíbles premios.">
+
+<!-- Fuentes -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Iconos sociales -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  :root {
+    --rojo:    #D42B2B;
+    --naranja: #F07020;
+    --verde:   #2E8B2E;
+    --amarillo:#FFD700;
+    --crema:   #FFF8F0;
+    --gris:    #F0EDE8;
+    --texto:   #2A1F1A;
+    --azul:    #1A3A6A;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Nunito',sans-serif; background:var(--crema); color:var(--texto); min-height:100vh; }
+
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    background:linear-gradient(135deg,var(--rojo) 0%,var(--naranja) 100%);
+    color:#fff; padding:20px 16px 24px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  header::before { content:''; position:absolute; top:-40px; right:-40px; width:150px; height:150px; background:rgba(255,255,255,0.07); border-radius:50%; }
+  header::after  { content:''; position:absolute; bottom:-50px; left:-30px; width:160px; height:160px; background:rgba(255,255,255,0.05); border-radius:50%; }
+  .header-inner  { position:relative; z-index:1; }
+
+  .logo-wrap { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px; }
+  .logo-img  { height:90px; width:auto; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.25); object-fit:contain; background:rgba(255,255,255,0.15); }
+  .logo-txt  { font-family:'Fredoka One',cursive; font-size:30px; letter-spacing:1px; line-height:1; }
+  .logo-txt span { color:var(--amarillo); }
+
+  .header-sub   { font-size:15px; font-weight:700; opacity:0.92; letter-spacing:0.5px; }
+  .header-badge { display:inline-block; margin-top:8px; background:rgba(255,255,255,0.2); border:1.5px solid rgba(255,255,255,0.4); border-radius:20px; padding:4px 14px; font-size:12px; font-weight:800; }
+
+  /* ── BARRA REDES SOCIALES ────────────────── */
+  .social-bar { background:#1a1a1a; display:flex; justify-content:center; align-items:center; gap:6px; padding:9px 16px; flex-wrap:wrap; }
+  .social-bar a { color:#fff; text-decoration:none; font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; padding:5px 12px; border-radius:20px; transition:background .2s; }
+  .social-bar a:hover { background:rgba(255,255,255,0.12); }
+  .social-bar .sep { color:rgba(255,255,255,0.25); font-size:18px; }
+  .s-inst { color:#E1306C; } .s-fb { color:#1877F2; } .s-tt { color:#fff; }
+
+  /* ── CÓMO FUNCIONA ───────────────────────── */
+  .como-funciona { background:#fff; padding:20px 16px; border-bottom:2px solid var(--gris); }
+  .cf-titulo { text-align:center; font-family:'Fredoka One',cursive; font-size:20px; color:var(--rojo); margin-bottom:14px; }
+  .pasos { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .paso { flex:1; min-width:100px; max-width:200px; background:var(--crema); border-radius:14px; padding:14px 10px; text-align:center; border:2px solid var(--gris); }
+  .paso-icon { font-size:26px; display:block; margin-bottom:6px; }
+  .paso-num  { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--rojo),var(--naranja)); color:#fff; font-family:'Fredoka One',cursive; font-size:14px; margin-bottom:6px; }
+  .paso h3   { font-size:13px; font-weight:800; color:var(--texto); margin-bottom:4px; }
+  .paso p    { font-size:11px; color:#888; line-height:1.4; }
+
+  /* ── BANNER INFO ─────────────────────────── */
+  .banner { background:linear-gradient(135deg,var(--verde) 0%,#1a6b1a 100%); color:#fff; margin:14px 16px 0; border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; box-shadow:0 4px 14px rgba(46,139,46,0.3); }
+  .banner-emoji { font-size:30px; flex-shrink:0; }
+  .banner-txt   { font-size:13px; font-weight:700; line-height:1.5; }
+  .banner-txt strong { font-size:15px; }
+
+  /* ── CONTROLES ───────────────────────────── */
+  .controles { background:#fff; padding:14px 16px; box-shadow:0 2px 8px rgba(0,0,0,0.07); position:sticky; top:0; z-index:10; margin-top:14px; }
+  .buscar { width:100%; padding:10px 16px; border:2px solid var(--gris); border-radius:12px; font-family:'Nunito',sans-serif; font-size:14px; outline:none; transition:border .2s; margin-bottom:10px; background:var(--crema); }
+  .buscar:focus { border-color:var(--naranja); }
+  .filtros { display:flex; gap:7px; overflow-x:auto; padding-bottom:3px; scrollbar-width:none; }
+  .filtros::-webkit-scrollbar { display:none; }
+  .btn-filtro { flex-shrink:0; padding:6px 14px; border-radius:20px; border:2px solid var(--gris); background:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; color:var(--texto); white-space:nowrap; }
+  .btn-filtro.activo { background:linear-gradient(135deg,var(--rojo),var(--naranja)); border-color:var(--naranja); color:#fff; }
+
+  /* ── ORDENAR / CONTADOR ──────────────────── */
+  .ordenar-wrap { display:flex; align-items:center; gap:8px; padding:10px 16px 0; font-size:13px; font-weight:700; color:#999; }
+  .btn-orden { padding:5px 12px; border-radius:8px; border:2px solid var(--gris); background:#fff; font-family:'Nunito',sans-serif; font-size:12px; font-weight:800; cursor:pointer; transition:all .2s; }
+  .btn-orden.activo { background:var(--verde); border-color:var(--verde); color:#fff; }
+  .contador { padding:6px 16px 0; font-size:12px; color:#aaa; font-weight:700; }
+
+  /* ── GRID ────────────────────────────────── */
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:13px; padding:14px 16px 100px; }
+
+  /* ── CARD PRODUCTO ───────────────────────── */
+  .card { background:#fff; border-radius:16px; box-shadow:0 2px 10px rgba(0,0,0,0.08); overflow:hidden; transition:transform .2s,box-shadow .2s; display:flex; flex-direction:column; animation:fadeUp .3s ease both; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.13); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .card-img       { width:100%; aspect-ratio:1/1; object-fit:cover; background:var(--crema); display:block; }
+  .card-emoji-wrap { font-size:44px; text-align:center; padding:18px 10px 10px; background:var(--crema); }
+  .card-body  { padding:10px 12px 14px; flex:1; display:flex; flex-direction:column; gap:4px; }
+  .card-cat   { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; color:var(--naranja); }
+  .card-nombre{ font-size:14px; font-weight:800; color:var(--texto); line-height:1.3; }
+  .card-desc  { font-size:12px; color:#888; line-height:1.4; flex:1; }
+  .card-pts   { margin-top:8px; background:linear-gradient(135deg,var(--rojo),var(--naranja)); color:#fff; border-radius:10px; padding:7px 10px; text-align:center; font-family:'Fredoka One',cursive; font-size:18px; letter-spacing:.5px; }
+  .card-pts small { font-family:'Nunito',sans-serif; font-size:11px; font-weight:700; opacity:.9; display:block; margin-top:-2px; }
+
+  /* ── CARD CUPÓN ──────────────────────────── */
+  .card-cupon  { background:linear-gradient(135deg,#1a3a6a 0%,#2d5aa0 100%); border-radius:16px; box-shadow:0 2px 10px rgba(0,0,0,0.15); overflow:hidden; transition:transform .2s,box-shadow .2s; display:flex; flex-direction:column; animation:fadeUp .3s ease both; position:relative; }
+  .card-cupon:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.2); }
+  .cupon-header { padding:18px 12px 10px; text-align:center; }
+  .cupon-pct { font-family:'Fredoka One',cursive; font-size:42px; color:var(--amarillo); line-height:1; }
+  .cupon-off { font-family:'Fredoka One',cursive; font-size:16px; color:#fff; opacity:.9; }
+  .cupon-body { padding:8px 12px 14px; flex:1; display:flex; flex-direction:column; gap:4px; }
+  .cupon-nombre { font-size:13px; font-weight:800; color:#fff; line-height:1.3; }
+  .cupon-desc   { font-size:11px; color:rgba(255,255,255,0.75); line-height:1.4; flex:1; }
+  .cupon-pts    { margin-top:8px; background:var(--amarillo); color:#1a3a6a; border-radius:10px; padding:7px 10px; text-align:center; font-family:'Fredoka One',cursive; font-size:18px; }
+  .cupon-pts small { font-family:'Nunito',sans-serif; font-size:11px; font-weight:800; display:block; margin-top:-2px; }
+  .cupon-deco  { position:absolute; top:50%; right:-15px; transform:translateY(-50%); width:30px; height:30px; background:var(--crema); border-radius:50%; }
+  .cupon-deco2 { position:absolute; top:50%; left:-15px;  transform:translateY(-50%); width:30px; height:30px; background:var(--crema); border-radius:50%; }
+
+  /* ── ESTADOS ─────────────────────────────── */
+  .estado { grid-column:1/-1; text-align:center; padding:50px 20px; color:#bbb; }
+  .estado-emoji { font-size:48px; margin-bottom:12px; }
+  .estado p { font-size:15px; font-weight:600; }
+  .spinner { width:36px; height:36px; border:4px solid var(--gris); border-top-color:var(--naranja); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 14px; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer { background:#1a1a1a; color:#fff; padding:24px 16px 20px; text-align:center; }
+  .footer-logo { font-family:'Fredoka One',cursive; font-size:22px; margin-bottom:12px; }
+  .footer-logo span { color:var(--naranja); }
+  .footer-social { display:flex; justify-content:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .footer-social a { color:#fff; text-decoration:none; font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; border:1.5px solid rgba(255,255,255,0.2); transition:background .2s; }
+  .footer-social a:hover { background:rgba(255,255,255,0.1); }
+  .footer-divider { border:none; border-top:1px solid rgba(255,255,255,0.1); margin:14px 0; }
+  .footer-links { display:flex; justify-content:center; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+  .footer-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:12px; font-weight:600; transition:color .2s; }
+  .footer-links a:hover { color:#fff; }
+  .footer-copy { font-size:11px; color:rgba(255,255,255,0.4); font-weight:600; }
+
+  /* ── LIGHTBOX ───────────────────────────── */
+  .lb-overlay {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(0,0,0,0.85); align-items:center; justify-content:center;
+    padding:20px; animation:lbIn .2s ease;
+  }
+  .lb-overlay.open { display:flex; }
+  @keyframes lbIn { from{opacity:0} to{opacity:1} }
+  .lb-box {
+    background:#fff; border-radius:20px; overflow:hidden;
+    max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    animation:lbUp .25s ease;
+  }
+  @keyframes lbUp { from{transform:scale(0.88)} to{transform:scale(1)} }
+  .lb-img { width:100%; max-height:70vw; object-fit:contain; background:var(--crema); display:block; }
+  .lb-info { padding:14px 16px 18px; text-align:center; }
+  .lb-nombre { font-family:'Fredoka One',cursive; font-size:18px; color:var(--texto); margin-bottom:8px; }
+  .lb-pts { display:inline-block; background:linear-gradient(135deg,var(--rojo),var(--naranja)); color:#fff; border-radius:12px; padding:6px 18px; font-family:'Fredoka One',cursive; font-size:20px; }
+  .lb-pts small { font-family:'Nunito',sans-serif; font-size:12px; font-weight:700; opacity:.9; margin-left:4px; }
+  .lb-close { position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+  .lb-close:hover { background:rgba(255,255,255,0.35); }
+
+  /* ── WHATSAPP FLOTANTE ───────────────────── */
+  .wa-btn { position:fixed; bottom:20px; right:16px; width:56px; height:56px; border-radius:50%; background:#25D366; color:#fff; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 4px 16px rgba(37,211,102,0.5); text-decoration:none; z-index:100; transition:transform .2s,box-shadow .2s; animation:pulse 2.5s ease-in-out infinite; }
+  .wa-btn:hover { transform:scale(1.1); box-shadow:0 6px 24px rgba(37,211,102,0.7); }
+  @keyframes pulse { 0%,100%{box-shadow:0 4px 16px rgba(37,211,102,0.5)} 50%{box-shadow:0 4px 28px rgba(37,211,102,0.8)} }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo cartel gde.jpeg" alt="Super ECO todo"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="header-sub">🎁 Catálogo de Canjes con Puntos</div>
+    <span class="header-badge">⭐ Programa de Fidelización</span>
+  </div>
+</header>
+
+<!-- REDES SOCIALES -->
+<div class="social-bar">
+  <a href="https://instagram.com/superecotodo" target="_blank" rel="noopener">
+    <i class="fab fa-instagram s-inst"></i> @superecotodo
+  </a>
+  <span class="sep">|</span>
+  <a href="https://facebook.com/superecotodo" target="_blank" rel="noopener">
+    <i class="fab fa-facebook s-fb"></i> superecotodo
+  </a>
+  <span class="sep">|</span>
+  <a href="https://tiktok.com/@superecotodo" target="_blank" rel="noopener">
+    <i class="fab fa-tiktok s-tt"></i> @superecotodo
+  </a>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section class="como-funciona">
+  <div class="cf-titulo">⭐ ¿Cómo funciona?</div>
+  <div class="pasos">
+    <div class="paso">
+      <span class="paso-icon">🛒</span>
+      <div class="paso-num">1</div>
+      <h3>Comprá</h3>
+      <p>Realizá tus compras en Super ECO todo</p>
+    </div>
+    <div class="paso">
+      <span class="paso-icon">⭐</span>
+      <div class="paso-num">2</div>
+      <h3>Acumulá puntos</h3>
+      <p>Cada compra suma puntos a tu cuenta</p>
+    </div>
+    <div class="paso">
+      <span class="paso-icon">🎁</span>
+      <div class="paso-num">3</div>
+      <h3>¡Canjeá!</h3>
+      <p>Elegí tu premio y retiralo en caja</p>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER INFO -->
+<div class="banner">
+  <div class="banner-emoji">📲</div>
+  <div class="banner-txt">
+    <strong>¿Cómo canjear tu premio?</strong><br>
+    Acercate a la caja con tu QR y pedile al cajero el producto que querés canjear.
+  </div>
+</div>
+
+<!-- CONTROLES -->
+<div class="controles">
+  <input class="buscar" type="search" id="buscador"
+         placeholder="🔍 Buscar producto..." oninput="filtrar()">
+  <div class="filtros" id="filtros">
+    <button class="btn-filtro activo" onclick="setCat('Todos',this)">🏪 Todos</button>
+  </div>
+</div>
+
+<div class="ordenar-wrap">
+  Ordenar:
+  <button class="btn-orden activo" onclick="setOrden('pts',this)">⭐ Menos puntos</button>
+  <button class="btn-orden" onclick="setOrden('alfa',this)">🔤 A–Z</button>
+</div>
+<div class="contador" id="contador"></div>
+
+<!-- GRILLA DE PRODUCTOS -->
+<div class="grid" id="grid">
+  <div class="estado"><div class="spinner"></div><p>Cargando catálogo...</p></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🛒 Super <span>ECO</span>todo</div>
+  <div class="footer-social">
+    <a href="https://instagram.com/superecotodo" target="_blank" rel="noopener">
+      <i class="fab fa-instagram s-inst"></i> @superecotodo
+    </a>
+    <a href="https://facebook.com/superecotodo" target="_blank" rel="noopener">
+      <i class="fab fa-facebook s-fb"></i> superecotodo
+    </a>
+    <a href="https://tiktok.com/@superecotodo" target="_blank" rel="noopener">
+      <i class="fab fa-tiktok s-tt"></i> @superecotodo
+    </a>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-links">
+    <a href="https://superecotodo.github.io/fidelizacion/" target="_blank">
+      <i class="fas fa-star"></i> Ver mis puntos
+    </a>
+    <a href="https://wa.me/TUNUMERO" target="_blank">
+      <i class="fab fa-whatsapp"></i> Contactanos
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 Super ECO todo — Todos los derechos reservados</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb" onclick="lbClose(event)">
+  <button class="lb-close" onclick="lbOff()" aria-label="Cerrar">✕</button>
+  <div class="lb-box">
+    <img class="lb-img" id="lb-img" src="" alt="">
+    <div class="lb-info">
+      <div class="lb-nombre" id="lb-nombre"></div>
+      <div class="lb-pts" id="lb-pts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÓN WHATSAPP FLOTANTE -->
+<a class="wa-btn"
+   href="https://wa.me/TUNUMERO?text=Hola!%20Quiero%20info%20sobre%20el%20programa%20de%20puntos%20%F0%9F%8C%9F"
+   target="_blank" rel="noopener" title="Consultanos por WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+// ── Emojis por categoría ──────────────────────────────────────────
+const EMOJI_CAT = {
+  'comestible':'🍝','bazar':'🎒','electrodoméstico':'🍳','electrodomestico':'🍳',
+  'limpieza':'🧹','perfumería':'💄','perfumeria':'💄','bebidas':'🥤',
+  'lácteos':'🧀','lacteos':'🧀','panadería':'🍞','panaderia':'🍞',
+  'carnicería':'🥩','carniceria':'🥩','descuento':'🏷️','otros':'🎁',
+};
+function emoji(cat){ return EMOJI_CAT[String(cat).toLowerCase()] || '🎁'; }
+function getPct(n){ const m=String(n).match(/(\d+)%/); return m?m[1]+'%':null; }
+
+// ── Estado global ─────────────────────────────────────────────────
+let PRODS=[], catActual='Todos', orden='pts';
+
+// ── Datos del catálogo (generados desde catalogo_plantilla.xlsx) ──
+// Para actualizar: abrí el Excel, modificá los datos y pedile a Claude que regenere el HTML
+const DATOS_CATALOGO = [
+  {"id":"PRD-027","nombre":"Cupon Descuento $5.000","descripcion":"Descuento de $5.000 en tu proxima compra","puntos":5000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-028","nombre":"Cupon Descuento $10.000","descripcion":"Descuento de $10.000 en tu proxima compra","puntos":10000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-029","nombre":"Cupon Descuento $15.000","descripcion":"Descuento de $15.000 en tu proxima compra","puntos":15000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-030","nombre":"Cupon Descuento $20.000","descripcion":"Descuento de $20.000 en tu proxima compra","puntos":20000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-031","nombre":"Mochila I-Run","descripcion":"Mochila con cierre, grande y chica","puntos":25000,"categoria":"Bazar","foto_url":"fotos/mochila-con-cierre-grande-y-chica-i-run.jpg"},
+  {"id":"PRD-032","nombre":"Mochila Argentina","descripcion":"Mochila diseno Argentina","puntos":13000,"categoria":"Bazar","foto_url":"fotos/mochila arg.jpg.jpeg"},
+  {"id":"PRD-033","nombre":"Mochila Cuadrada","descripcion":"Mochila estilo cuadrado","puntos":25000,"categoria":"Bazar","foto_url":"fotos/MOCHILA CUAD.JPG.jpeg"},
+  {"id":"PRD-034","nombre":"Mochila Pac Blue","descripcion":"Mochila color azul Pac","puntos":25000,"categoria":"Bazar","foto_url":"fotos/MOCHILA PAC BLUE.JPG.jpeg"},
+  {"id":"PRD-035","nombre":"Termo Corazon","descripcion":"Termo con diseno corazon","puntos":83000,"categoria":"Bazar","foto_url":"fotos/TERMO CORAZ.JPG.jpeg"},
+  {"id":"PRD-036","nombre":"Termo Lunas","descripcion":"Termo con diseno lunas","puntos":83000,"categoria":"Bazar","foto_url":"fotos/TERMO LUNAS.JPG.jpeg"},
+  {"id":"PRD-037","nombre":"Termo Messi","descripcion":"Termo edicion Messi","puntos":85000,"categoria":"Bazar","foto_url":"fotos/TERMO MESSI.JPG.jpeg"}
+];
+
+function cargar() {
+  PRODS = DATOS_CATALOGO;
+  buildFiltros();
+  filtrar();
+}
+
+// ── Filtros ───────────────────────────────────────────────────────
+function buildFiltros() {
+  const cats = ['Todos', ...new Set(PRODS.map(p=>p.categoria).filter(Boolean))];
+  const div  = document.getElementById('filtros');
+  div.innerHTML = '';
+  cats.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'btn-filtro' + (c === catActual ? ' activo' : '');
+    b.textContent = (c === 'Todos' ? '🏪 ' : emoji(c)+' ') + c;
+    b.onclick = () => setCat(c, b);
+    div.appendChild(b);
+  });
+}
+function setCat(c, b) {
+  catActual = c;
+  document.querySelectorAll('.btn-filtro').forEach(x=>x.classList.remove('activo'));
+  b.classList.add('activo'); filtrar();
+}
+function setOrden(o, b) {
+  orden = o;
+  document.querySelectorAll('.btn-orden').forEach(x=>x.classList.remove('activo'));
+  b.classList.add('activo'); filtrar();
+}
+
+// ── Filtrar + renderizar ──────────────────────────────────────────
+function filtrar() {
+  const q = document.getElementById('buscador').value.toLowerCase().trim();
+  let lista = PRODS.filter(p => {
+    const cat = catActual === 'Todos' || p.categoria === catActual;
+    const txt = !q || [p.nombre, p.descripcion, p.categoria].some(x=>String(x).toLowerCase().includes(q));
+    return cat && txt;
+  });
+  lista.sort(orden === 'pts'
+    ? (a,b) => a.puntos - b.puntos
+    : (a,b) => a.nombre.localeCompare(b.nombre));
+  render(lista);
+}
+
+function render(lista) {
+  const g = document.getElementById('grid');
+  const n = lista.length;
+  document.getElementById('contador').textContent = n ? `${n} producto${n!==1?'s':''}` : '';
+
+  if (!n) {
+    g.innerHTML = `<div class="estado"><div class="estado-emoji">🔍</div><p>No hay productos para esta búsqueda.</p></div>`;
+    return;
+  }
+
+  g.innerHTML = lista.map((p,i) => {
+    const d = `style="animation-delay:${i*0.04}s"`;
+    const esDesc = p.categoria.toLowerCase() === 'descuento';
+
+    if (esDesc) {
+      const pct = getPct(p.nombre);
+      return `<div class="card-cupon" ${d}>
+        <div class="cupon-deco"></div><div class="cupon-deco2"></div>
+        <div class="cupon-header">
+          <div class="cupon-pct">${pct||'%'}</div>
+          <div class="cupon-off">OFF en tu compra</div>
+        </div>
+        <div class="cupon-body">
+          <div class="cupon-nombre">${p.nombre}</div>
+          <div class="cupon-desc">${p.descripcion||''}</div>
+          <div class="cupon-pts">${p.puntos.toLocaleString('es-AR')}<small>puntos</small></div>
+        </div>
+      </div>`;
+    }
+
+    const lbCall = p.foto_url
+      ? `onclick="lbOpen('${p.foto_url.replace(/'/g,"\\'")}','${p.nombre.replace(/'/g,"\\'")}',${p.puntos})"` : '';
+    const img = p.foto_url
+      ? `<img class="card-img" src="${p.foto_url}" alt="${p.nombre}" loading="lazy"
+             style="cursor:zoom-in" ${lbCall}
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+         <div class="card-emoji-wrap" style="display:none">${emoji(p.categoria)}</div>`
+      : `<div class="card-emoji-wrap">${emoji(p.categoria)}</div>`;
+
+    return `<div class="card" ${d}>
+      ${img}
+      <div class="card-body">
+        <div class="card-cat">${p.categoria}</div>
+        <div class="card-nombre">${p.nombre}</div>
+        <div class="card-desc">${p.descripcion||''}</div>
+        <div class="card-pts">${p.puntos.toLocaleString('es-AR')}<small>puntos</small></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Lightbox ──────────────────────────────────────────────────────
+function lbOpen(src, nombre, puntos) {
+  document.getElementById('lb-img').src    = src;
+  document.getElementById('lb-img').alt    = nombre;
+  document.getElementById('lb-nombre').textContent = nombre;
+  document.getElementById('lb-pts').innerHTML =
+    puntos.toLocaleString('es-AR') + '<small>puntos</small>';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function lbOff() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbClose(e) {
+  if (e.target === document.getElementById('lb')) lbOff();
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') lbOff(); });
+
+cargar();
+</script>
+</body>
+</html>

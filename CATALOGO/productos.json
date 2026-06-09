@@ -1,0 +1,50 @@
+[
+  {
+    "id": "PRD-001",
+    "nombre": "Fideos 500g",
+    "descripcion": "Fideos secos de sémola 500g",
+    "puntos": 50,
+    "categoria": "Comestible",
+    "foto_url": "https://superecotodo.github.io/catalogo/fotos/fideos.jpg"
+  },
+  {
+    "id": "PRD-002",
+    "nombre": "Vasos x6",
+    "descripcion": "Juego de 6 vasos de vidrio",
+    "puntos": 60,
+    "categoria": "Bazar",
+    "foto_url": "https://superecotodo.github.io/catalogo/fotos/vasos.jpg"
+  },
+  {
+    "id": "PRD-003",
+    "nombre": "Panquequera",
+    "descripcion": "Sartén antiadherente para panqueques",
+    "puntos": 100,
+    "categoria": "Electrodoméstico",
+    "foto_url": "https://superecotodo.github.io/catalogo/fotos/panquequera.jpg"
+  },
+  {
+    "id": "PRD-004",
+    "nombre": "Shampoo 400ml",
+    "descripcion": "Shampoo hidratante 400ml",
+    "puntos": 70,
+    "categoria": "Perfumería",
+    "foto_url": "https://superecotodo.github.io/catalogo/fotos/shampoo.jpg"
+  },
+  {
+    "id": "PRD-005",
+    "nombre": "Cupón 10% descuento",
+    "descripcion": "Descuento del 10% en tu próxima compra",
+    "puntos": 150,
+    "categoria": "Descuento",
+    "foto_url": ""
+  },
+  {
+    "id": "PRD-006",
+    "nombre": "Cupón 20% descuento",
+    "descripcion": "Descuento del 20% en tu próxima compra",
+    "puntos": 280,
+    "categoria": "Descuento",
+    "foto_url": ""
+  }
+]
