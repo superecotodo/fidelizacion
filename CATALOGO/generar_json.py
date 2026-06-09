@@ -15,7 +15,7 @@ except ImportError:
     exit()
 
 CARPETA   = os.path.dirname(os.path.abspath(__file__))
-EXCEL     = os.path.join(CARPETA, 'productos.xlsx')
+EXCEL     = os.path.join(CARPETA, 'catalogo_plantilla.xlsx')
 JSON_OUT  = os.path.join(CARPETA, 'productos.json')
 URL_BASE_GITHUB = 'https://superecotodo.github.io/catalogo/fotos/'
 URL_BASE_DRIVE  = ''  # si usás Drive, pegá el prefijo acá (opcional)
