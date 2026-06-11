@@ -30,32 +30,31 @@ def main():
     ws   = wb.active
     rows = list(ws.iter_rows(values_only=True))
 
-    # Fila 1 = título decorativo, Fila 2 = encabezados, Fila 3+ = datos
+    # Fila 1 = encabezados, Fila 2+ = datos
+    # Columnas: ID | Nombre | Descripcion | Puntos | Categoria | Codigo_Barra | Imagen | Foto_URL | Activo
     productos = []
-    for fila in rows[2:]:
+    for fila in rows[1:]:
         id_prod = str(fila[0] or '').strip()
         nombre  = str(fila[1] or '').strip()
         desc    = str(fila[2] or '').strip()
         puntos  = fila[3]
         cat     = str(fila[4] or '').strip()
-        foto    = str(fila[5] or '').strip()
-        activo  = str(fila[6] or 'SI').strip().upper()
+        imagen  = str(fila[6] or '').strip()
+        url_ext = str(fila[7] or '').strip()
+        activo  = str(fila[8] or 'NO').strip().upper()
 
         # Saltar filas vacías, notas y productos inactivos
         if not id_prod or not id_prod.startswith('PRD'):
             continue
-        if activo == 'NO':
+        if activo != 'SI':
             continue
 
-        # Resolver URL de la foto
+        # Resolver URL de la foto: Foto_URL completa > archivo local en fotos/
         foto_url = ''
-        if foto:
-            if foto.startswith('http'):
-                # URL completa (Drive u otro)
-                foto_url = foto
-            else:
-                # Nombre de archivo → apunta a GitHub
-                foto_url = URL_BASE_GITHUB + foto
+        if url_ext.startswith('http'):
+            foto_url = url_ext
+        elif imagen:
+            foto_url = 'fotos/' + imagen
 
         try:
             pts = int(float(puntos)) if puntos else 0

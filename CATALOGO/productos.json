@@ -1,50 +1,16 @@
 [
-  {
-    "id": "PRD-001",
-    "nombre": "Fideos 500g",
-    "descripcion": "Fideos secos de sémola 500g",
-    "puntos": 50,
-    "categoria": "Comestible",
-    "foto_url": "https://superecotodo.github.io/catalogo/fotos/fideos.jpg"
-  },
-  {
-    "id": "PRD-002",
-    "nombre": "Vasos x6",
-    "descripcion": "Juego de 6 vasos de vidrio",
-    "puntos": 60,
-    "categoria": "Bazar",
-    "foto_url": "https://superecotodo.github.io/catalogo/fotos/vasos.jpg"
-  },
-  {
-    "id": "PRD-003",
-    "nombre": "Panquequera",
-    "descripcion": "Sartén antiadherente para panqueques",
-    "puntos": 100,
-    "categoria": "Electrodoméstico",
-    "foto_url": "https://superecotodo.github.io/catalogo/fotos/panquequera.jpg"
-  },
-  {
-    "id": "PRD-004",
-    "nombre": "Shampoo 400ml",
-    "descripcion": "Shampoo hidratante 400ml",
-    "puntos": 70,
-    "categoria": "Perfumería",
-    "foto_url": "https://superecotodo.github.io/catalogo/fotos/shampoo.jpg"
-  },
-  {
-    "id": "PRD-005",
-    "nombre": "Cupón 10% descuento",
-    "descripcion": "Descuento del 10% en tu próxima compra",
-    "puntos": 150,
-    "categoria": "Descuento",
-    "foto_url": ""
-  },
-  {
-    "id": "PRD-006",
-    "nombre": "Cupón 20% descuento",
-    "descripcion": "Descuento del 20% en tu próxima compra",
-    "puntos": 280,
-    "categoria": "Descuento",
-    "foto_url": ""
-  }
+  {"id":"PRD-027","nombre":"Cupon Descuento $5.000","descripcion":"Descuento de $5.000 en tu proxima compra","puntos":5000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-028","nombre":"Cupon Descuento $10.000","descripcion":"Descuento de $10.000 en tu proxima compra","puntos":10000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-029","nombre":"Cupon Descuento $15.000","descripcion":"Descuento de $15.000 en tu proxima compra","puntos":15000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-030","nombre":"Cupon Descuento $20.000","descripcion":"Descuento de $20.000 en tu proxima compra","puntos":20000,"categoria":"Descuento","foto_url":""},
+  {"id":"PRD-031","nombre":"Mochila I-Run","descripcion":"Mochila con cierre, grande y chica","puntos":25000,"categoria":"Bazar","foto_url":"fotos/mochila-con-cierre-grande-y-chica-i-run.jpg"},
+  {"id":"PRD-032","nombre":"Mochila Argentina","descripcion":"Mochila diseno Argentina","puntos":13000,"categoria":"Bazar","foto_url":"fotos/mochila arg.png"},
+  {"id":"PRD-033","nombre":"Mochila Cuadrada","descripcion":"Mochila estilo cuadrado","puntos":25000,"categoria":"Bazar","foto_url":"fotos/MOCHILA CUAD.JPG.jpeg"},
+  {"id":"PRD-034","nombre":"Mochila Pac Blue","descripcion":"Mochila color azul Pac","puntos":25000,"categoria":"Bazar","foto_url":"fotos/MOCHILA PAC BLUE.JPG.jpeg"},
+  {"id":"PRD-035","nombre":"Termo Corazon","descripcion":"Termo con diseno corazon","puntos":83000,"categoria":"Bazar","foto_url":"fotos/TERMO CORAZ.JPG.jpeg"},
+  {"id":"PRD-036","nombre":"Termo Lunas","descripcion":"Termo con diseno lunas","puntos":83000,"categoria":"Bazar","foto_url":"fotos/TERMO LUNAS.JPG.jpeg"},
+  {"id":"PRD-037","nombre":"Termo Messi","descripcion":"Termo edicion Messi","puntos":85000,"categoria":"Bazar","foto_url":"fotos/TERMO MESSI.JPG.jpeg"},
+  {"id":"PRD-038","nombre":"Conservadora 34 Lts","descripcion":"Conservadora rigida 34 litros","puntos":30000,"categoria":"Bazar","foto_url":"fotos/conservadora 34lts.jpg.jpeg"},
+  {"id":"PRD-039","nombre":"Yerbatero Messi","descripcion":"Yerbatero edicion Messi","puntos":4000,"categoria":"Bazar","foto_url":"fotos/yerbatero messi.jpg.jpeg"},
+  {"id":"PRD-040","nombre":"Remera Argentina","descripcion":"Remera seleccion Argentina edicion Super ECOtodo","puntos":15500,"categoria":"Bazar","foto_url":"fotos/remera arg eco.jpg"}
 ]
