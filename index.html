@@ -699,6 +699,16 @@ async function guardarMinimoCanje(){
 
 // Flujo de autorización para cajero
 async function pedirAutorizacion(){
+  // Validar ANTES de pedir autorización (mismas reglas que el canje).
+  // Así, si los puntos son menores al mínimo, aparece el cartel y no
+  // avanza a pedir la clave del admin.
+  if(!CA){ showEa('Buscá un cliente primero.','err'); return; }
+  const pts = parseInt(document.getElementById('e-cpts').value)||0;
+  const desc = document.getElementById('e-cdesc').value.trim();
+  if(!pts || pts < CFG.canje_minimo){ showEa(`El mínimo para canjear es ${CFG.canje_minimo} puntos.`,'err'); return; }
+  if(!desc){ showEa('Describí el producto canjeado.','err'); return; }
+  if(pts > CA.pts){ showEa(`El cliente solo tiene ${CA.pts} puntos. No alcanza para este canje.`,'err'); return; }
+
   const div = document.getElementById('div-clave-admin');
   const btnPedir = document.getElementById('btn-pedir-auth');
   const btnCan = document.getElementById('btn-can');
