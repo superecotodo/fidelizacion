@@ -256,6 +256,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--text
         </div>
         <div class="pts-bar"><div id="d-bar" style="width:6%"></div></div>
         <div class="pts-nxt" id="d-nxt"></div>
+        <div class="pts-nxt" id="d-vence" style="margin-top:6px;font-weight:700"></div>
       </div>
 
       <p class="sec-tit">Últimos movimientos</p>
@@ -497,15 +498,29 @@ async function cargarDatos() {
     ]);
     // Normalizar puntos de los movimientos (por si el Apps Script no usa la clave "pts")
     (_movs||[]).forEach(m=>{ m.pts = Number(m.pts ?? m.Puntos ?? m.puntos ?? 0) || 0; });
-    // Saldo de cada cliente = suma de su historial de Movimientos (registro real).
-    // La columna "Puntos" de la hoja Clientes quedó en 0, así que el saldo se calcula
-    // desde el ledger: suma/registro suman, canje resta.
+    // Saldo + vencimiento por INACTIVIDAD: los puntos vencen si pasa 1 año sin
+    // movimientos; cada compra renueva el plazo. Se calcula desde el ledger de
+    // Movimientos (la columna Puntos de la hoja Clientes quedó en 0).
+    const VENC_MESES = 12; // 1 año — para cambiarlo, editá este número
+    const _parseTs = ts => { const m=String(ts||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m? new Date(+m[3],+m[2]-1,+m[1]) : null; };
+    const _addMeses = (d,n)=>{ const x=new Date(d); x.setMonth(x.getMonth()+n); return x; };
+    const _hoy = new Date();
     (_clis||[]).forEach(c=>{
-      const guardado = Number(c.pts ?? c.Puntos ?? c.puntos ?? c.saldo ?? 0) || 0;
-      const delLedger = (_movs||[])
-        .filter(m=>m.cid===c.id)
-        .reduce((t,m)=> m.tipo==='canje' ? t - m.pts : t + m.pts, 0);
-      c.pts = delLedger !== 0 ? delLedger : guardado;
+      const movs=(_movs||[]).filter(m=>m.cid===c.id)
+        .map(m=>({tipo:m.tipo,pts:m.pts,_d:_parseTs(m.ts)}))
+        .sort((a,b)=> (a._d?+a._d:0) - (b._d?+b._d:0));
+      let bal=0, prev=null;
+      movs.forEach(m=>{
+        if(prev && m._d && m._d > _addMeses(prev,VENC_MESES)) bal=0; // se vencieron los anteriores
+        bal += (m.tipo==='canje' ? -m.pts : m.pts);
+        if(m._d) prev=m._d;
+      });
+      c._vence=null; c._vencido=false;
+      if(prev){
+        c._vence=_addMeses(prev,VENC_MESES);
+        if(_hoy > c._vence){ bal=0; c._vencido=true; }
+      }
+      c.pts = Math.max(0, bal);
     });
   } catch(e) {
     console.error('Error cargando datos:', e);
@@ -764,6 +779,20 @@ function abrirDash(id){
   document.getElementById('d-lvl').textContent=nivel(c.pts);
   const falta=Number(c.pts)<CFG.nivel_oro_min?CFG.nivel_oro_min-Number(c.pts):Number(c.pts)<CFG.nivel_diamante_min?CFG.nivel_diamante_min-Number(c.pts):0;
   document.getElementById('d-nxt').textContent=falta>0?`Te faltan ${falta} pts para el siguiente nivel`:'🏆 ¡Nivel máximo alcanzado!';
+
+  // Aviso de vencimiento por inactividad
+  const _vEl=document.getElementById('d-vence');
+  if(_vEl){
+    if(c._vencido){
+      _vEl.textContent='⚠️ Tus puntos vencieron por inactividad (más de 1 año sin compras).';
+      _vEl.style.color='var(--rojo)';
+    } else if(Number(c.pts)>0 && c._vence){
+      const _dias=Math.max(0,Math.ceil((c._vence-new Date())/86400000));
+      const _txt=_dias>60?`en ~${Math.round(_dias/30)} meses`:`en ${_dias} día${_dias===1?'':'s'}`;
+      _vEl.textContent=`⏳ Usá tus puntos antes del ${c._vence.toLocaleDateString('es-AR')} — vencen ${_txt} si no hacés compras.`;
+      _vEl.style.color=_dias<=30?'var(--rojo)':'var(--naranja)';
+    } else { _vEl.textContent=''; }
+  }
 
   // Barra de progreso al siguiente nivel
   const _p=Number(c.pts);
