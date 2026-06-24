@@ -492,10 +492,18 @@ async function cargarDatos() {
       gsGet('getClientes'),
       gsGet('getMovimientos')
     ]);
-    // Fix: la columna de puntos en el Sheet se llama "Puntos". Normalizamos a "pts"
-    // para que la app la lea sin importar el nombre que devuelva el Apps Script.
-    (_clis||[]).forEach(c=>{ if(c.pts===undefined||c.pts==='') c.pts = c.Puntos ?? c.puntos ?? c.saldo ?? 0; });
-    (_movs||[]).forEach(m=>{ if(m.pts===undefined||m.pts==='') m.pts = m.Puntos ?? m.puntos ?? 0; });
+    // Normalizar puntos de los movimientos (por si el Apps Script no usa la clave "pts")
+    (_movs||[]).forEach(m=>{ m.pts = Number(m.pts ?? m.Puntos ?? m.puntos ?? 0) || 0; });
+    // Saldo de cada cliente = suma de su historial de Movimientos (registro real).
+    // La columna "Puntos" de la hoja Clientes quedó en 0, así que el saldo se calcula
+    // desde el ledger: suma/registro suman, canje resta.
+    (_clis||[]).forEach(c=>{
+      const guardado = Number(c.pts ?? c.Puntos ?? c.puntos ?? c.saldo ?? 0) || 0;
+      const delLedger = (_movs||[])
+        .filter(m=>m.cid===c.id)
+        .reduce((t,m)=> m.tipo==='canje' ? t - m.pts : t + m.pts, 0);
+      c.pts = delLedger !== 0 ? delLedger : guardado;
+    });
   } catch(e) {
     console.error('Error cargando datos:', e);
     _clis = _clis || [];
