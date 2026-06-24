@@ -260,7 +260,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--text
 
       <p class="sec-tit">Últimos movimientos</p>
       <div id="d-hist" style="margin:0 16px 16px"></div>
-      <div style="margin:0 16px"><button class="btn-sec" onclick="mostrar('s-cons')">← Volver</button></div>
+      <div style="margin:0 16px;display:flex;gap:10px">
+        <button class="btn-sec" id="d-refresh" onclick="refrescarDash()" style="border-color:var(--naranja);color:var(--naranja)">🔄 Actualizar</button>
+        <button class="btn-sec" onclick="mostrar('s-cons')">← Volver</button>
+      </div>
     </div>
 
     <!-- REDES SOCIALES -->
@@ -743,7 +746,17 @@ async function consultar(){
   abrirDash(c.id);
 }
 
+let _dashId=null;
+async function refrescarDash(){
+  if(!_dashId) return;
+  const btn=document.getElementById('d-refresh');
+  if(btn){ btn.disabled=true; btn.textContent='Actualizando…'; }
+  await cargarDatos();
+  abrirDash(_dashId);
+  if(btn){ btn.disabled=false; btn.textContent='🔄 Actualizar'; }
+}
 function abrirDash(id){
+  _dashId=id;
   const c=_clis.find(x=>x.id===id); if(!c) return;
   mostrar('s-dash');
   document.getElementById('d-nom').textContent=c.nom;
