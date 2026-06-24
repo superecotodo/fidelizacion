@@ -658,6 +658,14 @@ function aplicarPermisos(rol){
     } else {
       seccionCanje.innerHTML = `
         <p class="sub-label sl-c">🎁 Registrar canje</p>
+        <div class="ef" style="background:#fff8e6;border:1px solid #ffe0a3;border-radius:8px;padding:10px;margin-bottom:12px">
+          <label>⚙️ Mínimo de puntos para canjear</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="e-cmin" type="number" min="1" value="${CFG.canje_minimo}" style="flex:1">
+            <button class="btn-e" style="width:auto;padding:0 16px;background:#34C759;color:#fff;margin:0" onclick="guardarMinimoCanje()">💾 Guardar</button>
+          </div>
+          <small style="color:#8a6d3b">Cambialo según el producto. Aplica a todos los canjes.</small>
+        </div>
         <div class="ef"><label>Puntos a descontar</label><input id="e-cpts" type="number" placeholder="Mínimo ${CFG.canje_minimo}" min="${CFG.canje_minimo}"></div>
         <div class="ef"><label>Producto canjeado</label><input id="e-cdesc" type="text" placeholder="Ej: Fideos 500g"></div>
         <button class="btn-e be-c" id="btn-can" onclick="canjear()" disabled>− Registrar canje</button>
@@ -665,6 +673,28 @@ function aplicarPermisos(rol){
     }
   }
 
+}
+
+// ═══ ADMIN: fijar el mínimo de puntos para canjear ═══
+// Guarda en Google Sheets (hoja Configuracion, clave canje_minimo) y actualiza
+// el valor en uso para que el cartel de validación muestre el nuevo mínimo.
+async function guardarMinimoCanje(){
+  const inp = document.getElementById('e-cmin');
+  const v = parseInt(inp && inp.value) || 0;
+  if(v < 1){ showEa('Ingresá un mínimo válido (mayor a 0).','err'); return; }
+
+  // Aplicar de inmediato en esta sesión
+  CFG.canje_minimo = v;
+  const cpts = document.getElementById('e-cpts');
+  if(cpts){ cpts.min = v; cpts.placeholder = 'Mínimo ' + v; }
+
+  showEa('Guardando mínimo... ⏳','ok',0);
+  try {
+    await gsPost({action:'setConfiguracion', clave:'canje_minimo', valor:v});
+    showEa(`✅ Mínimo de canje actualizado a ${v} puntos.`,'ok');
+  } catch(e) {
+    showEa('⚠️ Se aplicó en esta sesión pero no se pudo guardar en la nube. Revisá la conexión.','err');
+  }
 }
 
 // Flujo de autorización para cajero
