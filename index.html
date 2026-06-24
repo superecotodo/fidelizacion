@@ -492,6 +492,10 @@ async function cargarDatos() {
       gsGet('getClientes'),
       gsGet('getMovimientos')
     ]);
+    // Fix: la columna de puntos en el Sheet se llama "Puntos". Normalizamos a "pts"
+    // para que la app la lea sin importar el nombre que devuelva el Apps Script.
+    (_clis||[]).forEach(c=>{ if(c.pts===undefined||c.pts==='') c.pts = c.Puntos ?? c.puntos ?? c.saldo ?? 0; });
+    (_movs||[]).forEach(m=>{ if(m.pts===undefined||m.pts==='') m.pts = m.Puntos ?? m.puntos ?? 0; });
   } catch(e) {
     console.error('Error cargando datos:', e);
     _clis = _clis || [];
