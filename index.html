@@ -563,6 +563,14 @@ function showEa(msg,tipo,ms=5000){
   el.textContent=msg; el.className='ea '+tipo;
   if(ms) setTimeout(()=>{el.className='ea';el.textContent='';},ms);
 }
+// Cartel dentro del cuadro de canje (al lado de los botones). Si no existe,
+// cae al cartel general de arriba.
+function showCanje(msg,tipo,ms=5000){
+  const el=document.getElementById('canje-al');
+  if(!el){ return showEa(msg,tipo,ms); }
+  el.textContent=msg; el.className='ea '+tipo;
+  if(ms) setTimeout(()=>{el.className='ea';el.textContent='';},ms);
+}
 function loading(msg='Cargando...'){
   const el=document.getElementById('emp-al');
   el.textContent=msg; el.className='ea ok';
@@ -652,6 +660,7 @@ function aplicarPermisos(rol){
           <label>🔑 Clave de autorización admin</label>
           <input id="e-clave-admin" type="password" placeholder="Pedila al administrador">
         </div>
+        <div id="canje-al" class="ea"></div>
         <button class="btn-e" style="background:#FF9500;color:#fff" id="btn-pedir-auth" onclick="pedirAutorizacion()">🔑 Solicitar autorización admin</button>
         <button class="btn-e be-c" id="btn-can" onclick="canjear()" disabled style="display:none">− Confirmar canje</button>
       `;
@@ -668,6 +677,7 @@ function aplicarPermisos(rol){
         </div>
         <div class="ef"><label>Puntos a descontar</label><input id="e-cpts" type="number" placeholder="Mínimo ${CFG.canje_minimo}" min="${CFG.canje_minimo}"></div>
         <div class="ef"><label>Producto canjeado</label><input id="e-cdesc" type="text" placeholder="Ej: Fideos 500g"></div>
+        <div id="canje-al" class="ea"></div>
         <button class="btn-e be-c" id="btn-can" onclick="canjear()" disabled>− Registrar canje</button>
       `;
     }
@@ -702,12 +712,12 @@ async function pedirAutorizacion(){
   // Validar ANTES de pedir autorización (mismas reglas que el canje).
   // Así, si los puntos son menores al mínimo, aparece el cartel y no
   // avanza a pedir la clave del admin.
-  if(!CA){ showEa('Buscá un cliente primero.','err'); return; }
+  if(!CA){ showCanje('Buscá un cliente primero.','err'); return; }
   const pts = parseInt(document.getElementById('e-cpts').value)||0;
   const desc = document.getElementById('e-cdesc').value.trim();
-  if(!pts || pts < CFG.canje_minimo){ showEa(`El mínimo para canjear es ${CFG.canje_minimo} puntos.`,'err'); return; }
-  if(!desc){ showEa('Describí el producto canjeado.','err'); return; }
-  if(pts > CA.pts){ showEa(`El cliente solo tiene ${CA.pts} puntos. No alcanza para este canje.`,'err'); return; }
+  if(!pts || pts < CFG.canje_minimo){ showCanje(`El mínimo para canjear es ${CFG.canje_minimo} puntos.`,'err'); return; }
+  if(!desc){ showCanje('Describí el producto canjeado.','err'); return; }
+  if(pts > CA.pts){ showCanje(`El cliente solo tiene ${CA.pts} puntos. No alcanza para este canje.`,'err'); return; }
 
   const div = document.getElementById('div-clave-admin');
   const btnPedir = document.getElementById('btn-pedir-auth');
@@ -722,7 +732,7 @@ async function pedirAutorizacion(){
 
   // Verificar la clave
   const claveIngresada = document.getElementById('e-clave-admin').value;
-  if(!claveIngresada){ showEa('Ingresá la clave de autorización.','err'); return; }
+  if(!claveIngresada){ showCanje('Ingresá la clave de autorización.','err'); return; }
 
   const empleados = await cargarEmpleados();
   const adminValido = empleados.find(e =>
@@ -732,14 +742,14 @@ async function pedirAutorizacion(){
   );
 
   if(adminValido){
-    showEa(`✅ Autorizado por ${adminValido.nombre}. Confirmá el canje.`,'ok',0);
+    showCanje(`✅ Autorizado por ${adminValido.nombre}. Confirmá el canje.`,'ok',0);
     btnCan.style.display = 'block';
     btnCan.disabled = false;
     btnPedir.style.display = 'none';
     div.style.display = 'none';
     sessionStorage.setItem('eco_auth_admin', adminValido.nombre);
   } else {
-    showEa('❌ Clave incorrecta. Pedile al administrador su contraseña.','err');
+    showCanje('❌ Clave incorrecta. Pedile al administrador su contraseña.','err');
   }
 }
 
@@ -970,16 +980,16 @@ function sumar(){
 
 // ═══ CANJEAR ═══
 function canjear(){
-  if(!CA){showEa('Buscá un cliente primero.','err');return;}
+  if(!CA){showCanje('Buscá un cliente primero.','err');return;}
   const pts=parseInt(document.getElementById('e-cpts').value)||0;
   const desc=document.getElementById('e-cdesc').value.trim();
   const caj=document.getElementById('e-caj').value.trim();
   // Si es cajero, registrar quién autorizó
   const authAdmin = sessionStorage.getItem('eco_auth_admin');
-  if(!pts||pts<CFG.canje_minimo){showEa(`El mínimo para canjear es ${CFG.canje_minimo} puntos.`,'err');return;}
-  if(!desc){showEa('Describí el producto canjeado.','err');return;}
-  if(!caj){showEa('Ingresá tu nombre.','err');return;}
-  if(pts>CA.pts){showEa(`El cliente solo tiene ${CA.pts} puntos. No alcanza para este canje.`,'err');return;}
+  if(!pts||pts<CFG.canje_minimo){showCanje(`El mínimo para canjear es ${CFG.canje_minimo} puntos.`,'err');return;}
+  if(!desc){showCanje('Describí el producto canjeado.','err');return;}
+  if(!caj){showCanje('Ingresá tu nombre.','err');return;}
+  if(pts>CA.pts){showCanje(`El cliente solo tiene ${CA.pts} puntos. No alcanza para este canje.`,'err');return;}
   openModal(
     '¿Confirmás el canje?',
     `Descontar ${pts} puntos de ${CA.nom} por: "${desc}". Le quedarán ${CA.pts-pts} puntos.`,
